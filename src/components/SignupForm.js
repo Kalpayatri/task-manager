@@ -25,11 +25,16 @@ const SignupForm = ({ setAuth }) => {
   const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       const res = await axios.post('http://localhost:5000/api/auth/signup', values);
-      localStorage.setItem('token', res.data.token);
-      setAuth(true);
-      history.push('/login');
+      if (res && res.data) {
+        localStorage.setItem('token', res.data.token);
+        setAuth(true);
+        history.push('/login');
+      } else {
+        setErrors({ server: 'Invalid response from server' });
+      }
     } catch (err) {
-      setErrors({ server: err.response.data.msg });
+      const errorMessage = err.response && err.response.data ? err.response.data.msg : 'Something went wrong';
+      setErrors({ server: errorMessage });
     }
     setSubmitting(false);
   };
