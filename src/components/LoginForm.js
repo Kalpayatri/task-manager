@@ -60,6 +60,7 @@ const LoginForm = ({ setAuth }) => {
         Don't have an account yet? <span onClick={() => history.push('/signup')} className="link">Signup</span>
       </p>
       <button className="google-button">Login with Google</button>
+      <p>Good Morning!</p>
     </div>
   );
 };
